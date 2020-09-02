@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Core\" />
+    <ProjectReference Include="..\CRUDExam.Data\CRUDExam.Data.csproj" />
   </ItemGroup>
 
 </Project>
