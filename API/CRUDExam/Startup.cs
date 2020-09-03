@@ -32,6 +32,12 @@ namespace CRUDExam
         {
             services.AddDbContext<AppDbContext>();
             services.AddControllers();
+            services.AddCors(o => o.AddPolicy("EnableCors", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -49,6 +55,7 @@ namespace CRUDExam
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("EnableCors");
             app.UseHttpsRedirection();
 
             app.UseRouting();

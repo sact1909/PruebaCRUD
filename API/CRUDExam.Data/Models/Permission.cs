@@ -15,10 +15,9 @@ namespace CRUDExam.Data.Models
         public string Emp_Name { get; set; }
         [MaxLength(100)]
         public string Emp_LastName { get; set; }
-        public int Permission_Type { get; set; }
         public DateTime Date_Permission { get; set; }
         [ForeignKey("PermissionType")]
-        public int FPermissionType { get; set; }
+        public int Permission_Type { get; set; }
         public PermissionType PermissionType { get; set; }
     }
 }

@@ -1,31 +1,38 @@
-import Vue from 'vue'
-//import App from './App.vue'
-import HelloWorld from './components/HelloWorld.vue'
-import MostrarDatos from './components/MostrarDatos.vue'
-const NotFound = { template: '<p>Page not found</p>' }
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Moment from "vue-moment";
+import VueSweetalert2 from "vue-sweetalert2";
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import CRUDPermission from "./components/PermissionCrud.vue";
+import CreatePermission from "./components/CreatePermission.vue";
+import UpdatePermission from "./components/UpdatePermission.vue";
+import App from "./App.vue";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.use(VueRouter);
+Vue.use(Moment);
+Vue.use(VueSweetalert2);
 
-const routes = {
-  '/': HelloWorld,
-  '/MostrarDatos': MostrarDatos
-}
+const routes = [
+  { path: "/Permission", component: CRUDPermission },
+  { path: "/CreatePermission", component: CreatePermission },
+  {
+    path: "/UpdatePermission",
+    name: "UpdatePermission",
+    component: UpdatePermission,
+    props: true,
+  },
+  { path: "/", redirect: "/Permission" },
+];
+
+const router = new VueRouter({
+  routes,
+  mode: "history",
+});
 
 new Vue({
-  el: '#app',
-  data: {
-    currentRoute: window.location.pathname
-  },
-  computed: {
-    ViewComponent () {
-      return routes[this.currentRoute] || NotFound
-    }
-  },
-  render (h) { return h(this.ViewComponent) }
-})
-
-/*
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
-*/
+  el: "#app",
+  router,
+  render: (h) => h(App),
+});
