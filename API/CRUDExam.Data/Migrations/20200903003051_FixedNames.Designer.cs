@@ -4,14 +4,16 @@ using CRUDExam.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRUDExam.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200903003051_FixedNames")]
+    partial class FixedNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +39,7 @@ namespace CRUDExam.Data.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("FPermissionType")
+                    b.Property<int>("FPermisionType")
                         .HasColumnType("int");
 
                     b.Property<int>("Permission_Type")
@@ -45,9 +47,9 @@ namespace CRUDExam.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("FPermissionType");
+                    b.HasIndex("FPermisionType");
 
-                    b.ToTable("Permission");
+                    b.ToTable("Permision");
                 });
 
             modelBuilder.Entity("CRUDExam.Data.Models.PermissionType", b =>
@@ -87,7 +89,7 @@ namespace CRUDExam.Data.Migrations
                 {
                     b.HasOne("CRUDExam.Data.Models.PermissionType", "PermissionType")
                         .WithMany("Permission")
-                        .HasForeignKey("FPermissionType")
+                        .HasForeignKey("FPermisionType")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

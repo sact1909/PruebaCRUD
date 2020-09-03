@@ -15,7 +15,7 @@ namespace CRUDExam.Repo.Core.Concrete
             this._context = context;
         }
 
-        public IRepository<Permision> Permission => new Repository<Permision>(_context);
+        public IRepository<Permission> Permission => new Repository<Permission>(_context);
         public IRepository<PermissionType> PermissionType => new Repository<PermissionType>(_context);
 
         public async void Dispose()
@@ -23,7 +23,7 @@ namespace CRUDExam.Repo.Core.Concrete
             await _context.DisposeAsync();
         }
 
-        public async Task Save()
+        public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
         }

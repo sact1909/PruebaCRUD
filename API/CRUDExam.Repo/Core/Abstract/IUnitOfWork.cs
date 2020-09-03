@@ -8,9 +8,9 @@ namespace CRUDExam.Repo.Core.Abstract
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<Permision> Permission { get; }
+        IRepository<Permission> Permission { get; }
         IRepository<PermissionType> PermissionType { get; }
-        Task Save();
+        Task SaveAsync();
 
     }
 }

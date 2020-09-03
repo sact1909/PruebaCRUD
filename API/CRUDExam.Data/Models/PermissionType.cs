@@ -13,6 +13,6 @@ namespace CRUDExam.Data.Models
         public int ID { get; set; }
         [MaxLength(100)]
         public string Description { get; set; }
-        public ICollection<Permision> Permission { get; set; }
+        public ICollection<Permission> Permission { get; set; }
     }
 }

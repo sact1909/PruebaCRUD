@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 using CRUDExam.Data.Models;
+using CRUDExam.Repo;
+using CRUDExam.Repo.Core.Abstract;
+using CRUDExam.Repo.Core.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +33,13 @@ namespace CRUDExam
             services.AddDbContext<AppDbContext>();
             services.AddControllers();
         }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterModule<RepositoryModule>();
+        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

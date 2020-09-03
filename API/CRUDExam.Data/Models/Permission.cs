@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CRUDExam.Data.Models
 {
-    public class Permision
+    public class Permission
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,7 +18,7 @@ namespace CRUDExam.Data.Models
         public int Permission_Type { get; set; }
         public DateTime Date_Permission { get; set; }
         [ForeignKey("PermissionType")]
-        public int FPermisionType { get; set; }
+        public int FPermissionType { get; set; }
         public PermissionType PermissionType { get; set; }
     }
 }
