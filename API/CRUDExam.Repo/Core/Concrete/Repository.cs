@@ -17,7 +17,7 @@ namespace CRUDExam.Repo.Core.Concrete
         {
             this._context = context;
         }
-        public async Task Add(TEntity entity)
+        public async Task AddAsync(TEntity entity)
         {
             await _context.Set<TEntity>().AddAsync(entity);
         }
@@ -27,11 +27,7 @@ namespace CRUDExam.Repo.Core.Concrete
             await _context.Set<TEntity>().AddRangeAsync(entities);
         }
 
-        public Task Delete(TEntity entity)
-        {
-            _context.Set<TEntity>().Remove(entity);
-            return Task.CompletedTask;
-        }
+        
 
         public bool IsExist(Expression<Func<TEntity, bool>> expression)
         {
@@ -54,16 +50,14 @@ namespace CRUDExam.Repo.Core.Concrete
 
         }
 
-        public Task Update(TEntity entity)
+        public async Task UpdateAsync(TEntity entity)
         {
             //_context.Set<TEntity>().Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
 
-            return
-                Task.CompletedTask;
         }
 
-        public async Task<List<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+        public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
         {
             //await _context.Set<TEntity>().ToListAsync();
 
@@ -93,10 +87,9 @@ namespace CRUDExam.Repo.Core.Concrete
         }
 
 
-        public Task Remove(TEntity entityToDelete)
+        public async Task RemoveAsync(TEntity entityToDelete)
         {
             _context.Set<TEntity>().Remove(entityToDelete);
-            return Task.CompletedTask;
         }
 
         public Task RemoveRange(List<TEntity> entityToDelete)

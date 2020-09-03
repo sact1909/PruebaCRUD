@@ -9,11 +9,11 @@ namespace CRUDExam.Repo.Core.Abstract
 {
     public interface IRepository <TEntity> where TEntity : class
     {
-        Task Add(TEntity entityToInsert);
+        Task AddAsync(TEntity entityToInsert);
         Task AddRange(IEnumerable<TEntity> entities);
-        Task Update(TEntity entityToUpdate);
-        Task<List<TEntity>> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "");
-        Task Remove(TEntity entityToDelete);
+        Task UpdateAsync(TEntity entityToUpdate);
+        Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "");
+        Task RemoveAsync(TEntity entityToDelete);
         Task RemoveRange(List<TEntity> entityToDelete);
         bool IsExist(Expression<Func<TEntity, bool>> expression);
 

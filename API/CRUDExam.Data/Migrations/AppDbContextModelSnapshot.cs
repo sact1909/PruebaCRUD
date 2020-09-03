@@ -19,7 +19,7 @@ namespace CRUDExam.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CRUDExam.Data.Models.Permision", b =>
+            modelBuilder.Entity("CRUDExam.Data.Models.Permission", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -37,7 +37,7 @@ namespace CRUDExam.Data.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("FPermisionType")
+                    b.Property<int>("FPermissionType")
                         .HasColumnType("int");
 
                     b.Property<int>("Permission_Type")
@@ -45,9 +45,9 @@ namespace CRUDExam.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("FPermisionType");
+                    b.HasIndex("FPermissionType");
 
-                    b.ToTable("Permision");
+                    b.ToTable("Permission");
                 });
 
             modelBuilder.Entity("CRUDExam.Data.Models.PermissionType", b =>
@@ -64,13 +64,30 @@ namespace CRUDExam.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("PermissionType");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Description = "Enfermedad"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Description = "Diligencias"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Description = "Descanso"
+                        });
                 });
 
-            modelBuilder.Entity("CRUDExam.Data.Models.Permision", b =>
+            modelBuilder.Entity("CRUDExam.Data.Models.Permission", b =>
                 {
                     b.HasOne("CRUDExam.Data.Models.PermissionType", "PermissionType")
                         .WithMany("Permission")
-                        .HasForeignKey("FPermisionType")
+                        .HasForeignKey("FPermissionType")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
