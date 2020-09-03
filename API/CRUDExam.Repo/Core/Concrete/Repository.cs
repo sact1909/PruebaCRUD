@@ -13,9 +13,11 @@ namespace CRUDExam.Repo.Core.Concrete
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly AppDbContext _context;
+        internal DbSet<TEntity> DbSet;
         public Repository(AppDbContext context)
         {
             this._context = context;
+            DbSet = context.Set<TEntity>();
         }
         public async Task AddAsync(TEntity entity)
         {
@@ -39,9 +41,14 @@ namespace CRUDExam.Repo.Core.Concrete
             return await _context.Set<TEntity>().Where(expression).ToListAsync();
         }
 
-        public async Task<TEntity> FindSpecific(Expression<Func<TEntity, bool>> expression)
+        public async Task<TEntity> GetByIDAsync(Expression<Func<TEntity, bool>> expression)
         {
             return await _context.Set<TEntity>().Where(expression).FirstOrDefaultAsync();
+        }
+
+        public TEntity GetByID(Expression<Func<TEntity, bool>> expression)
+        {
+            return  _context.Set<TEntity>().Where(expression).FirstOrDefault();
         }
 
         public async Task<List<TEntity>> GetAll()
@@ -90,6 +97,12 @@ namespace CRUDExam.Repo.Core.Concrete
         public async Task RemoveAsync(TEntity entityToDelete)
         {
             _context.Set<TEntity>().Remove(entityToDelete);
+        }
+
+        public async Task RemoveAsync(object Id)
+        {
+            TEntity entityToDelete = DbSet.Find(Id);
+            await RemoveAsync(entityToDelete);
         }
 
         public Task RemoveRange(List<TEntity> entityToDelete)

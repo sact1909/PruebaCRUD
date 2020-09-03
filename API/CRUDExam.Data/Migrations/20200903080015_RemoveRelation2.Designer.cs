@@ -4,14 +4,16 @@ using CRUDExam.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRUDExam.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200903080015_RemoveRelation2")]
+    partial class RemoveRelation2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,8 +43,6 @@ namespace CRUDExam.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("Permission_Type");
 
                     b.ToTable("Permission");
                 });
@@ -78,15 +78,6 @@ namespace CRUDExam.Data.Migrations
                             ID = 3,
                             Description = "Descanso"
                         });
-                });
-
-            modelBuilder.Entity("CRUDExam.Data.Models.Permission", b =>
-                {
-                    b.HasOne("CRUDExam.Data.Models.PermissionType", "PermissionType")
-                        .WithMany("Permission")
-                        .HasForeignKey("Permission_Type")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

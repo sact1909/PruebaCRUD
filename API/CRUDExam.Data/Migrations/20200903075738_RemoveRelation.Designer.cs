@@ -4,14 +4,16 @@ using CRUDExam.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRUDExam.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200903075738_RemoveRelation")]
+    partial class RemoveRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,12 +39,15 @@ namespace CRUDExam.Data.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<int?>("PermissionTypeID")
+                        .HasColumnType("int");
+
                     b.Property<int>("Permission_Type")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Permission_Type");
+                    b.HasIndex("PermissionTypeID");
 
                     b.ToTable("Permission");
                 });
@@ -82,11 +87,9 @@ namespace CRUDExam.Data.Migrations
 
             modelBuilder.Entity("CRUDExam.Data.Models.Permission", b =>
                 {
-                    b.HasOne("CRUDExam.Data.Models.PermissionType", "PermissionType")
+                    b.HasOne("CRUDExam.Data.Models.PermissionType", null)
                         .WithMany("Permission")
-                        .HasForeignKey("Permission_Type")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PermissionTypeID");
                 });
 #pragma warning restore 612, 618
         }

@@ -26,19 +26,23 @@ namespace CRUDExam.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500,"Ha ocurrido un error, Favor intentar nuevamente");
+                return StatusCode(500, "Ha ocurrido un error, Favor intentar nuevamente");
             }
 
         }
 
 
+
+
         [HttpDelete]
-        public virtual async Task<IActionResult> Delete(TEntity tEntity)
+        [Route("Delete/{Id}")]
+        public virtual async Task<IActionResult> Delete(int Id)
         {
 
             try
             {
-                await _genericRepository.RemoveAsync(tEntity);
+                
+                await _genericRepository.RemoveAsync(Id);
                 await _unitofwork.SaveAsync();
                 return Ok("Registro Removido de manera Exitosa");
             }
