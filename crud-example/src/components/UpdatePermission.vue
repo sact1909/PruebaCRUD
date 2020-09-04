@@ -30,14 +30,6 @@
       <tr>
         <td>Fecha</td>
         <td>
-          <!--
-          <input
-            type="text"
-            class="form-control"
-            v-model="datatosend.date_Permission"
-            placeholder="YYYY-MM-DD"
-          />
-          -->
           <datepicker :format="customFormatter" v-model="datatosend.date_Permission" :bootstrap-styling="true"></datepicker>
         </td>
       </tr>
@@ -95,9 +87,6 @@ export default {
         .getData(`PermissionManager/GetById/${this.id}`)
         .then((response) => {
           this.datatosend = response.data;
-          this.datatosend.date_Permission = moment(
-            response.data.date_Permission
-          ).format("YYYY-MM-DD");
         });
     },
     save: function () {
