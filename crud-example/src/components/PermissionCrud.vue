@@ -1,8 +1,6 @@
 <template>
   <div>
-    <router-link to="CreatePermission" class="btn btn-primary" replace
-      >Crear Permiso</router-link
-    >
+    <router-link to="CreatePermission" class="btn btn-primary" replace>Crear Permiso</router-link>
     <br />
     <table class="table table-stippe" style="margin-top:1%">
       <thead>
@@ -26,11 +24,8 @@
             <router-link
               :to="{ name: 'UpdatePermission', params: { id: row.id } }"
               class="btn btn-success"
-              >Update</router-link
-            >&nbsp;
-            <button class="btn btn-danger" v-on:click="DeleteData(row)">
-              Delete
-            </button>
+            >Actualizar</router-link>&nbsp;
+            <button class="btn btn-danger" v-on:click="DeleteData(row)">Eliminar</button>
           </td>
         </tr>
       </tbody>
@@ -39,8 +34,8 @@
 </template>
 
 <script>
-import datosExportar from "../services/apiservice";
-const apiservices = new datosExportar();
+import dataToExport from "../services/apiservice";
+const apiservices = new dataToExport();
 export default {
   name: "PermissionCrud",
   data() {
@@ -61,7 +56,7 @@ export default {
           console.log(response.data);
         });
     },
-    DeleteData: function(rowdata) {
+    DeleteData: function (rowdata) {
       apiservices
         .deleteData("PermissionManager/Delete/" + rowdata.id)
         .then((response) => {

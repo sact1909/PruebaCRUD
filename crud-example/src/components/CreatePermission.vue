@@ -30,14 +30,6 @@
       <tr>
         <td>Fecha</td>
         <td>
-          <!--
-          <input
-            type="text"
-            class="form-control"
-            v-model="datatosend.Date_Permission"
-            placeholder="YYYY-MM-DD"
-          />
-          -->
           <datepicker :format="customFormatter" v-model="datatosend.Date_Permission" :bootstrap-styling="true"></datepicker>
         </td>
       </tr>
