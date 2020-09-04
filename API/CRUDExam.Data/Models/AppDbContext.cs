@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,11 +12,11 @@ namespace CRUDExam.Data.Models
         {
 
         }
-
-        public AppDbContext(DbContextOptions<AppDbContext> options)
+        public IConfiguration Configuration { get; }
+        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration)
             : base(options)
         {
-
+            Configuration = configuration;
         }
 
 
@@ -24,7 +25,7 @@ namespace CRUDExam.Data.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-1QDB0MI\\PCSQLSERVER;Database=TestPermissions;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("LocalConnection"));
             }
         }
         public DbSet<Permission> Permission { get; set; }
