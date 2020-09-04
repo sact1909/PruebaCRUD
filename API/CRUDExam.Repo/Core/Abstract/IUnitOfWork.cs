@@ -1,4 +1,5 @@
 ﻿using CRUDExam.Data.Models;
+using CRUDExam.Repo.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +9,8 @@ namespace CRUDExam.Repo.Core.Abstract
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<Permission> Permission { get; }
-        IRepository<PermissionType> PermissionType { get; }
+        IPermissionRepository Permission { get; }
+        IPermissionTypeRepository PermissionType { get; }
         Task SaveAsync();
 
     }

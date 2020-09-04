@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CRUDExam.Repo.Repositories.Concrete
 {
-    public class PermissionTypeRepository : Repository<PermissionType>, IPermissionType
+    public class PermissionTypeRepository : Repository<PermissionType>, IPermissionTypeRepository
     {
         public PermissionTypeRepository(AppDbContext context)
             :base(context)

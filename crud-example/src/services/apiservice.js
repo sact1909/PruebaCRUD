@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURL = "https://localhost:44390/api/";
 
-export default class datosExportar {
+export default class dataToExport {
   getData(metodo) {
     return axios.get(`${baseURL}${metodo}`);
   }

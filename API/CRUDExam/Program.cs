@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Autofac.Extensions.DependencyInjection;
 
 namespace CRUDExam

@@ -6,8 +6,7 @@ using System.Text;
 
 namespace CRUDExam.Repo.Repositories.Abstract
 {
-    public interface IPermission : IRepository<Permission>
+    public interface IPermissionTypeRepository : IRepository<PermissionType>
     {
-
     }
 }
