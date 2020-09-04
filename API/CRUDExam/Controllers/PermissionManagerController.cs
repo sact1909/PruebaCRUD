@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using CRUDExam.Data.Models;
 using CRUDExam.Repo.Core.Abstract;
 using CRUDExam.Repo.Core.DTO;
@@ -12,10 +13,10 @@ namespace CRUDExam.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PermissionManagerController : BaseController<Permission>
+    public class PermissionManagerController : BaseController<Permission, PermissionDTO>
     {
-        public PermissionManagerController(IUnitOfWork unitOfWork, IRepository<Permission> genericRepository)
-        :base(unitOfWork, genericRepository)
+        public PermissionManagerController(IUnitOfWork unitOfWork, IRepository<Permission> genericRepository, IMapper mapper)
+        :base(unitOfWork, genericRepository, mapper)
         {
 
         }
@@ -26,18 +27,9 @@ namespace CRUDExam.Controllers
 
             try
             {
-                List<PermissionDTO> results = new List<PermissionDTO>();
-                foreach (var result in await _unitofwork.Permission.GetAsync()) {
-                    results.Add(new PermissionDTO(_unitofwork) { 
-                        ID = result.ID,
-                        Date_Permission = result.Date_Permission,
-                        Emp_LastName = result.Emp_LastName,
-                        Emp_Name = result.Emp_Name,
-                        PermissionTypeID = result.Permission_Type
-                    });
-                }
-
-                return Ok(results);
+                var resmodel = await _unitofwork.Permission.GetWithPermissionTypes();
+                var dtoList = _mapper.Map<List<PermissionDTO>>(resmodel);
+                return Ok(dtoList);
             }
             catch (Exception ex)
             {

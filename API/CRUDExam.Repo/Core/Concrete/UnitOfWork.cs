@@ -1,5 +1,7 @@
 ﻿using CRUDExam.Data.Models;
 using CRUDExam.Repo.Core.Abstract;
+using CRUDExam.Repo.Repositories.Abstract;
+using CRUDExam.Repo.Repositories.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,8 +17,8 @@ namespace CRUDExam.Repo.Core.Concrete
             this._context = context;
         }
 
-        public IRepository<Permission> Permission => new Repository<Permission>(_context);
-        public IRepository<PermissionType> PermissionType => new Repository<PermissionType>(_context);
+        public IPermissionRepository Permission => new PermissionRepository(_context);
+        public IPermissionTypeRepository PermissionType => new PermissionTypeRepository(_context);
 
         public async void Dispose()
         {

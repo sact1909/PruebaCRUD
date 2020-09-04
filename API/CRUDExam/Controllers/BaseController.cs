@@ -2,31 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using CRUDExam.Repo.Core.Abstract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRUDExam.Controllers
 {
-    public class BaseController<TEntity> : ControllerBase where TEntity : class
+    public class BaseController<TEntity, TEntityDTO> : ControllerBase where TEntity : class
     {
         protected readonly IUnitOfWork _unitofwork;
         protected readonly IRepository<TEntity> _genericRepository;
-        public BaseController(IUnitOfWork unitofwork, IRepository<TEntity> genericRepository)
+        protected readonly IMapper _mapper;
+
+
+        public BaseController(IUnitOfWork unitofwork, IRepository<TEntity> genericRepository, IMapper mapper)
         {
             _unitofwork = unitofwork;
             _genericRepository = genericRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> Get() {
+        public virtual async Task<IActionResult> Get()
+        {
 
             try
             {
-                return Ok(await _genericRepository.GetAsync());
+                var model = await _genericRepository.GetAsync();
+                var modelDTOList = _mapper.Map<List<TEntityDTO>>(model);
+                return Ok(modelDTOList);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ha ocurrido un error, Favor intentar nuevamente");
+                return StatusCode(500, new { Message = "Ha ocurrido un error, Favor intentar nuevamente", ErrorType = ex.Message });
             }
 
         }
@@ -41,50 +49,53 @@ namespace CRUDExam.Controllers
 
             try
             {
-                
+
                 await _genericRepository.RemoveAsync(Id);
                 await _unitofwork.SaveAsync();
                 return Ok("Registro Removido de manera Exitosa");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ha ocurrido un error, Favor intentar nuevamente");
+                return StatusCode(500, new { Message = "Ha ocurrido un error, Favor intentar nuevamente", ErrorType = ex.Message });
             }
 
         }
 
         [HttpPut]
-        public virtual async Task<IActionResult> Put(TEntity tEntity)
+        public virtual async Task<IActionResult> Put(TEntityDTO tEntity)
         {
 
             try
             {
-                await _genericRepository.UpdateAsync(tEntity);
+                var model = _mapper.Map<TEntity>(tEntity);
+                await _genericRepository.UpdateAsync(model);
                 await _unitofwork.SaveAsync();
                 return Ok("Registro actualizado de manera Exitosa");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ha ocurrido un error, Favor intentar nuevamente");
+                return StatusCode(500, new { Message = "Ha ocurrido un error, Favor intentar nuevamente", ErrorType = ex.Message });
             }
 
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Post(TEntity tEntity)
+        public virtual async Task<IActionResult> Post(TEntityDTO tEntity)
         {
 
             try
             {
-                await _genericRepository.AddAsync(tEntity);
+                var model = _mapper.Map<TEntity>(tEntity);
+                await _genericRepository.AddAsync(model);
                 await _unitofwork.SaveAsync();
                 return Ok("Registro guardado de manera Exitosa");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ha ocurrido un error, Favor intentar nuevamente");
+                return StatusCode(500, new { Message = "Ha ocurrido un error, Favor intentar nuevamente", ErrorType = ex.Message });
             }
 
         }
+
     }
 }

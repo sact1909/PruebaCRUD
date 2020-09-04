@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
+using AutoMapper;
 using CRUDExam.Data.Models;
 using CRUDExam.Repo;
+using CRUDExam.Repo.AutoMapper;
 using CRUDExam.Repo.Core.Abstract;
 using CRUDExam.Repo.Core.Concrete;
+using CRUDExam.Repo.Core.DTO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +34,19 @@ namespace CRUDExam
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>();
+
+
+            //AutoMapper Configuration
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+               
+                mc.AddProfile(new AutoMapProfile());
+                
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+             //AutoMapper 
+
             services.AddControllers();
             services.AddCors(o => o.AddPolicy("EnableCors", builder =>
             {

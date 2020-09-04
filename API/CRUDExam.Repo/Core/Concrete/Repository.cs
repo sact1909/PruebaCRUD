@@ -54,7 +54,6 @@ namespace CRUDExam.Repo.Core.Concrete
         public async Task<List<TEntity>> GetAll()
         {
             return await _context.Set<TEntity>().ToListAsync();
-
         }
 
         public async Task UpdateAsync(TEntity entity)

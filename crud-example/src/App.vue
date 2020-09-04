@@ -1,5 +1,3 @@
-<script src="./node_modules/vue-router/vue.js" />
-<script src="./node_modules/vue-router/vue-router.js" />
 <style>
 body {
   padding-top: 5rem;
